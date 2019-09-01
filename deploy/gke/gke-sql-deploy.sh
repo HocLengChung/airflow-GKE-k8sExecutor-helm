@@ -166,19 +166,19 @@ helm init --wait --upgrade --service-account tiller
 
 SQL_ALCHEMY_CONN=postgresql+psycopg2://$AIRFLOW_DB_USER:$AIRFLOW_DB_USER_PASSWORD@$KUBERNETES_POSTGRES_CLOUDSQLPROXY_SERVICE:$KUBERNETES_POSTGRES_CLOUDSQLPROXY_PORT/$AIRFLOW_DB_NAME
 
-echo $SQL_ALCHEMY_CONN > /secrets/airflow/sql_alchemy_conn
+echo $SQL_ALCHEMY_CONN > ./secrets/airflow/sql_alchemy_conn
 # Create the fernet key which is needed to decrypt database the database
 FERNET_KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | openssl base64)
-echo $FERNET_KEY > /secrets/airflow/fernet-key
+echo $FERNET_KEY > ./secrets/airflow/fernet-key
 
 kubectl create secret generic airflow \
     --from-file=fernet-key=/secrets/airflow/fernet-key \
     --from-file=sql_alchemy_conn=/secrets/airflow/sql_alchemy_conn
 
-sed -i.bak "s/pdName:.*/pdName: $NFS_DISK_NAME/g" /airflow/values.yaml
-sed -i.bak "s/databaseInstance:.*/databaseInstance: $AIRFLOW_DB_INSTANCE/g" /airflow/values.yaml
-sed -i.bak "s/project:.*/project: $CLOUDSDK_CORE_PROJECT/g" /airflow/values.yaml
-sed -i.bak "s/region:.*/region: $CLOUDSDK_COMPUTE_REGION/g" /airflow/values.yaml
+sed -i.bak "s/pdName:.*/pdName: $NFS_DISK_NAME/g" ./airflow/values.yaml
+sed -i.bak "s/databaseInstance:.*/databaseInstance: $AIRFLOW_DB_INSTANCE/g" ./airflow/values.yaml
+sed -i.bak "s/project:.*/project: $CLOUDSDK_CORE_PROJECT/g" ./airflow/values.yaml
+sed -i.bak "s/region:.*/region: $CLOUDSDK_COMPUTE_REGION/g" ./airflow/values.yaml
 rm /airflow/values.yaml.bak
 
 helm upgrade \
