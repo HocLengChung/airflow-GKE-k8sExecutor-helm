@@ -154,7 +154,7 @@ fi
 
 if $CREATE_NFS_DISK
 then
-    gcloud compute disks create $NFS_DISK_NAME --size=$NFS_DISK_SIZE 
+    gcloud compute disks create $NFS_DISK_NAME --size=$NFS_DISK_SIZE --region=$CLOUDSDK_COMPUTE_REGION
 fi
 
 # Set up the cluster with helm
