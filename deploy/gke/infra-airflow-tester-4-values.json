@@ -1,6 +1,6 @@
 {
     "CREATE_NFS_DISK": true,
-    "CREATE_AIRFLOW_DB_INSTANCE": true,
+    "CREATE_AIRFLOW_DB_INSTANCE": false,
     "RESTORE_AIRFLOW_FROM_BACKUP": false,
     "CREATE_AUTOSCALING_POOL": false,
     "CLOUDSDK_CORE_PROJECT": "airflow-tester-4",
