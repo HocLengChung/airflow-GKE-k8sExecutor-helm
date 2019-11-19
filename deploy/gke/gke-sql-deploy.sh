@@ -73,7 +73,7 @@ then
         --storage-size=$AIRFLOW_STORAGE_SIZE
 
 fi
-if $CREATE_AIRFLOW_DB_INSTANCE
+if $CREATE_K8S_CLUSTER
 then
 gcloud beta container \
     clusters create $K8S_CLUSTER_NAME \
