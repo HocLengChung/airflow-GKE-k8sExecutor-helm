@@ -117,9 +117,9 @@ then
                 --quiet
     fi
 else
-    gcloud sql databases create $AIRFLOW_DB_NAME \
+   until gcloud sql databases create $AIRFLOW_DB_NAME \
             --instance=$AIRFLOW_DB_INSTANCE \
-            --async
+            --async; do echo "Try again"; done 
 fi
 
 if $CREATE_AUTOSCALING_POOL
