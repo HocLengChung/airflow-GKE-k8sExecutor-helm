@@ -55,7 +55,6 @@ K8S_AUTOSCALING_MIN_NODES=$(jq -r .K8S_AUTOSCALING_MIN_NODES $VALUES)
 CREATE_NFS_DISK=$(jq -r .CREATE_NFS_DISK $VALUES)
 NFS_DISK_SIZE=$(jq -r .NFS_DISK_SIZE $VALUES)
 NFS_DISK_NAME=$(jq -r .NFS_DISK_NAME $VALUES)
-echo $VALUES
 if $CREATE_AIRFLOW_DB_INSTANCE
 then
     gcloud sql instances create $AIRFLOW_DB_INSTANCE \
@@ -74,7 +73,8 @@ then
         --storage-size=$AIRFLOW_STORAGE_SIZE
 
 fi
-
+if $CREATE_AIRFLOW_DB_INSTANCE
+then
 gcloud beta container \
     clusters create $K8S_CLUSTER_NAME \
     --zone=$CLOUDSDK_COMPUTE_ZONE \
@@ -97,10 +97,9 @@ gcloud beta container \
     --enable-autoupgrade \
     --enable-autorepair \
     --maintenance-window "04:00"
-
 # Wait for the kubernetes cluster to be ready
 sleep 30
-
+fi
 if $RESTORE_AIRFLOW_FROM_BACKUP
 then
     AIRFLOW_BACKUP_ID=$(gcloud sql backups list \
