@@ -184,10 +184,10 @@ rm /airflow/values.yaml.bak
 helm upgrade --install "airflow" stable/airflow --namespace "airflow" 
 
 NAMESPACE=default
-NFS_POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "role=nfs-server" -o jsonpath="{.items[0].metadata.name}")
+NFS_POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l 'role=nfs-server' -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -i $NFS_POD_NAME --namespace $NAMESPACE -- /bin/bash -c "mkdir -p /exports/logs;mkdir -p /exports/dags;chmod go+rw /exports/dags;chmod go+rw /exports/logs; ls -ltrah /exports/"
 
 DAGS_FOLDER_LOCAL=/dags
 DAGS_FOLDER_REMOTE=/usr/local/airflow/dags
-SCHEDULER_POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "app=airflow,tier=scheduler" -o jsonpath="{.items[0].metadata.name}")
+SCHEDULER_POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "app=airflow,tier=scheduler" -o jsonpath='{.items[0].metadata.name}')
 kubectl cp $DAGS_FOLDER_LOCAL $NAMESPACE/$SCHEDULER_POD_NAME:$DAGS_FOLDER_REMOTE
