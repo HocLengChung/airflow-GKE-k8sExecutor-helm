@@ -6,7 +6,7 @@
     "CLOUDSDK_CORE_PROJECT": "airflow-tester3",
     "CLOUDSDK_COMPUTE_REGION": "europe-west1",
     "CLOUDSDK_COMPUTE_ZONE": "europe-west1-b",
-    "NFS_DISK_COMPUTE_ZONES": "europe-west1-b,europe-west1-a",
+    "NFS_DISK_COMPUTE_ZONES": "europe-west1-b,europe-west1-d",
     "AIRFLOW_DB_INSTANCE": "airflow5",
     "CREATE_K8S_CLUSTER":false,
     "K8S_CLUSTER_NAME": "airflow",
