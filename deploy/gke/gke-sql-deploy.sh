@@ -181,7 +181,7 @@ sed -i.bak "s/project:.*/project: $CLOUDSDK_CORE_PROJECT/g" ./airflow/values.yam
 sed -i.bak "s/region:.*/region: $CLOUDSDK_COMPUTE_REGION/g" ./airflow/values.yaml
 rm /airflow/values.yaml.bak
 
-helm upgrade --install --namespace "airflow" --name "airflow" stable/airflow
+helm upgrade --install stable/airflow --name "airflow" --namespace "airflow" 
 
 NAMESPACE=default
 NFS_POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "role=nfs-server" -o jsonpath="{.items[0].metadata.name}")
